@@ -29,10 +29,10 @@ const addUser = async (req, res) => {
       res.header("x-authentication-token", token);
 
       console.log(user);
-      res.status(200).send("User is successfuly registered");
+      res.status(200).json(user);
     }
   } catch (err) {
-    console.log(`This is error from User Controller${err}`);
+    res.status(400).json({ error: "Registaration Failed" });
   }
 };
 

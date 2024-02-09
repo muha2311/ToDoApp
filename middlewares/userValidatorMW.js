@@ -5,6 +5,6 @@ module.exports = (req, res, next) => {
   if (valid) {
     next();
   } else {
-    res.status(403).send("Forbidden Command.. userValidatorMW");
+    res.status(403).json({ error: "Forbidden Command.. userValidatorMW" });
   }
 };

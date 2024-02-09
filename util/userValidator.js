@@ -10,7 +10,7 @@ const schema = {
     },
     email: {
       type: "string",
-      pattern: "^[^s@]+@[^s@]+.[^s@]+$",
+      pattern: "^[^@]+@[^@]+.[^@]+$",
     },
     password: {
       type: "string",

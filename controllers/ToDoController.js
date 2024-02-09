@@ -3,7 +3,7 @@ const User = require("../models/MainModel");
 const getAllList = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email }).exec();
-    res.send(user.toDoList);
+    res.json(user.toDoList);
   } catch (err) {
     console.log(err);
   }
@@ -13,10 +13,10 @@ const addList = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
-      return res.status(400).send("User is not registered");
+      return res.status(400).json("User is not registered");
     }
     if (user._id != req.userId.toString()) {
-      return res.status(400).send("Failed.. not the same id");
+      return res.status(400).json("Failed.. not the same id");
     }
 
     let tasks = req.body.toDoList.map((task) => ({ task }));
@@ -26,7 +26,7 @@ const addList = async (req, res) => {
     }
     await user.save();
 
-    res.status(200).send(user.toDoList);
+    res.status(200).json(user.toDoList);
   } catch (err) {
     console.log(err);
   }
@@ -36,17 +36,17 @@ const deleteFromList = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (user._id != req.userId.toString()) {
-      return res.status(400).send("Failed.. not the same id");
+      return res.status(400).json("Failed.. not the same id");
     }
     const id = user.toDoList.findIndex(
       (task) => task._id.toString() === req.params.subId
     );
     if (id === -1) {
-      return res.status(404).send("Task not found");
+      return res.status(404).json("Task not found");
     }
     user.toDoList.splice(id, 1);
     await user.save();
-    res.status(200).send("Task is successfully Completed");
+    res.status(200).json("Task is successfully Completed");
   } catch (err) {
     console.log(err);
   }

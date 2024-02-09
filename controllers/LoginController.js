@@ -11,20 +11,20 @@ const login = async (req, res) => {
 
     if (!user) {
       console.log("Invalid Email");
-      return res.status(400).send("Invalid Email or Password");
+      return res.status(400).json({ error: "Invalid Email or Password" });
     }
     // Check if password is right
     let pass = await bcrypt.compare(req.body.password, user.password);
     if (!pass) {
       console.log("Invalid Password");
-      return res.status(400).send("Invalid Email or Password");
+      return res.status(400).json({ error: "Invalid Email or Password" });
     }
     if (!secretData.jwtSecret) {
-      return res.status(500).send("Token is not defined");
+      return res.status(500).json({ error: "Token is not defined" });
     }
     let token = user.generateAuthToken();
     res.header("x-authentication-token", token);
-    res.status(200).send("Logged In");
+    res.status(200).json({ message: "Logged In" });
   } catch (err) {
     console.log(err);
   }
